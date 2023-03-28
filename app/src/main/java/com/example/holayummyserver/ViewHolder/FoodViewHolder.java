@@ -13,15 +13,16 @@ import com.example.holayummyserver.R;
 
 public class FoodViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener,View.OnCreateContextMenuListener
 {
-    public TextView txtMenuName;
-    public android.widget.ImageView ImageView;
+    public TextView food_name;
+
+    public android.widget.ImageView food_image;
 
     private ItemClickListener itemClickListener;
 
     public FoodViewHolder(@NonNull View itemView) {
         super(itemView);
-        txtMenuName = (TextView) itemView.findViewById(R.id.food_name);
-        ImageView = itemView.findViewById(R.id.food_image);
+        food_name = (TextView) itemView.findViewById(R.id.food_name);
+        food_image = itemView.findViewById(R.id.food_image);
         itemView.setOnCreateContextMenuListener(this);
         itemView.setOnClickListener(this);
     }

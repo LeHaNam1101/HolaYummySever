@@ -35,34 +35,17 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnSignUp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="Sign Up"
-            android:backgroundTint="@color/btnSignUp"
-            android:layout_margin="20dp"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="5dp"
-            >
-        </Button>
-        <Button
             android:id="@+id/btnSignIn"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:text="Sign In"
-            android:backgroundTint="@color/btnSignUp"
-            android:layout_margin="20dp"
-            android:textColor="@color/white"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="2"
+            android:backgroundTint="@color/btnSignUp"
             android:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
+            android:text="Sign In"
+            android:textColor="@color/white"
             app:cornerRadius="5dp"
-            >
-        </Button>
+            app:shadowEnabled="true"
+            app:shadowHeight="5dp"></Button>
     </LinearLayout>
 </RelativeLayout>

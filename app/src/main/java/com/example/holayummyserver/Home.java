@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -27,6 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -50,7 +52,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.UUID;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
@@ -61,7 +63,7 @@ public class Home extends AppCompatActivity {
     Category newCategory;
     Uri saveUri;
 
-    private final int PICK_IMAGE_REQUEST = 71;
+
     TextView txtFullName;
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -116,6 +118,10 @@ public class Home extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         loadMenu();
+
+
+        NavigationView navigationView1 = findViewById(R.id.nav_view);
+        navigationView1.setNavigationItemSelectedListener(this);
     }
 
     private void showDialog() {
@@ -214,7 +220,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if (requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             saveUri = data.getData();
             btnSelect.setText("Image Selected !");
@@ -228,7 +234,7 @@ public class Home extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
 // Start the intent to choose an image
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        startActivityForResult(intent,Common.PICK_IMAGE_REQUEST);
 //        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
@@ -262,12 +268,23 @@ public class Home extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
-
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater =getMenuInflater();
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
+inflater.inflate(R.menu.home,menu);
         return true;
     }
 
@@ -382,5 +399,22 @@ public class Home extends AppCompatActivity {
 
 
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.nav_orders){
+
+            Intent orders = new Intent(Home.this,OrderStatus.class);
+            startActivity(orders);
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+
     }
 }
